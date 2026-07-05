@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   Color,
   Fog,
@@ -22,7 +22,6 @@ declare module "@react-three/fiber" {
 extend({ ThreeGlobe: ThreeGlobe });
 
 const RING_PROPAGATION_SPEED = 3;
-const aspect = 1.2;
 const cameraZ = 300;
 
 type Position = {
@@ -248,13 +247,18 @@ export function Globe({ globeConfig, data }: WorldProps) {
 }
 
 export function WebGLRendererConfig() {
-  const { gl, size } = useThree();
+  const { gl, size, camera } = useThree();
 
   useEffect(() => {
     gl.setPixelRatio(window.devicePixelRatio);
     gl.setSize(size.width, size.height);
     gl.setClearColor(0xffaaff, 0);
-  }, [gl, size.height, size.width]);
+
+    if (camera instanceof PerspectiveCamera) {
+      camera.aspect = size.width / size.height;
+      camera.updateProjectionMatrix();
+    }
+  }, [gl, size.height, size.width, camera]);
 
   return null;
 }
@@ -343,12 +347,19 @@ function GlobeCamera({
 
 export function World(props: WorldProps) {
   const { globeConfig } = props;
-  const scene = new Scene();
-  if (globeConfig.showAtmosphere !== false) {
-    scene.fog = new Fog(0xffffff, 400, 2000);
-  }
+  const scene = useMemo(() => {
+    const nextScene = new Scene();
+    if (globeConfig.showAtmosphere !== false) {
+      nextScene.fog = new Fog(0xffffff, 400, 2000);
+    }
+    return nextScene;
+  }, [globeConfig.showAtmosphere]);
+
   return (
-    <Canvas scene={scene} camera={new PerspectiveCamera(50, aspect, 180, 1800)}>
+    <Canvas
+      scene={scene}
+      camera={{ fov: 50, near: 180, far: 1800, position: [0, 80, cameraZ] }}
+    >
       <WebGLRendererConfig />
       <ambientLight color={globeConfig.ambientLight} intensity={0.6} />
       <directionalLight

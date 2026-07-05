@@ -1,20 +1,24 @@
 "use client"
 
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import Link from "next/link"
 import { AnimatePresence, motion } from "motion/react"
-import { RiArrowDownSLine } from "@remixicon/react"
+import {
+  RiArrowDownSLine,
+  RiCloseLine,
+  RiMenuLine,
+} from "@remixicon/react"
 
 import { Button, buttonVariants } from "../ui/button"
 import { cn } from "@/lib/utils"
 import SvgDividerHorizontal from "../utils/svg-line"
 
-function LogoSvg() {
+function LogoSvg({ className }: { className?: string }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 42.27 50.48"
-      className="h-8 w-auto fill-primary"
+      className={cn("h-7 w-auto fill-primary sm:h-8", className)}
       aria-hidden="true"
     >
       <path
@@ -62,12 +66,38 @@ const navItems: NavItem[] = [
   },
 ]
 
-const MIN_DROPDOWN_WIDTH = 144 // matches old min-w-36
+const MIN_DROPDOWN_WIDTH = 144
 
-function Navbar() {
-  const [active, setActive] = useState<NavItem | null>(null)
-  const [coords, setCoords] = useState({ left: 0, width: 0 })
+function AuthButtons({
+  className,
+  onAction,
+}: {
+  className?: string
+  onAction?: () => void
+}) {
+  return (
+    <div className={cn("flex items-center gap-2", className)}>
+      <Button variant="outline" size="lg" className="w-full sm:w-auto" onClick={onAction}>
+        Login
+      </Button>
+      <Button variant="outline" size="lg" className="w-full sm:w-auto" onClick={onAction}>
+        Ask Zerops AI
+      </Button>
+    </div>
+  )
+}
 
+function DesktopNav({
+  active,
+  setActive,
+  coords,
+  setCoords,
+}: {
+  active: NavItem | null
+  setActive: (item: NavItem | null) => void
+  coords: { left: number; width: number }
+  setCoords: (coords: { left: number; width: number }) => void
+}) {
   const navRef = useRef<HTMLElement>(null)
   const itemRefs = useRef<Record<string, HTMLDivElement | null>>({})
 
@@ -83,130 +113,295 @@ function Navbar() {
   }
 
   return (
-    <div className="relative flex h-16 w-full items-center justify-between px-4">
-      <div className="flex items-center">
-        <Link href="/" aria-label="Zerops home">
-          <LogoSvg />
-        </Link>
-      </div>
-
-      <nav
-        ref={navRef}
-        aria-label="Main"
-        className="absolute left-1/2 z-30 flex -translate-x-1/2 items-center gap-0.5"
-        onMouseLeave={() => setActive(null)}
-      >
-        {navItems.map((item) => (
-          <div
-            key={item.title}
-            ref={(el) => {
-              itemRefs.current[item.title] = el
-            }}
-            className="relative"
-            onMouseEnter={() => handleEnter(item)}
-          >
-            {item.dropdown ? (
-              <button
-                type="button"
-                className={cn(
-                  buttonVariants({ variant: "ghost", size: "default" }),
-                  "relative z-10 gap-1 text-sm font-medium text-foreground/80 hover:text-foreground",
-                  active?.title === item.title && "text-foreground"
-                )}
-              >
-                {item.title}
-                <RiArrowDownSLine
-                  className={cn(
-                    "size-4 opacity-60 transition-transform duration-200",
-                    active?.title === item.title && "-rotate-180"
-                  )}
-                />
-              </button>
-            ) : (
-              <Link
-                href={item.href ?? "#"}
-                className={cn(
-                  buttonVariants({ variant: "ghost", size: "default" }),
-                  "relative z-10 text-sm font-medium text-foreground/80 hover:text-foreground",
-                  active?.title === item.title && "text-foreground"
-                )}
-              >
-                {item.title}
-              </Link>
-            )}
-
-            {/* sliding hover pill behind the active item */}
-            {active?.title === item.title && (
-              <motion.div
-                layoutId="nav-hover-bg"
-                className="absolute inset-0 rounded-md bg-muted"
-                transition={{ type: "spring", stiffness: 500, damping: 40 }}
-              />
-            )}
-          </div>
-        ))}
-
-        {/* dropdown panel that slides + resizes to sit under whichever item is active */}
-        <AnimatePresence>
-          {active?.dropdown && (
-            <motion.div
-              // this outer div is the actual hoverable hit-area — it spans
-              // from right under the trigger all the way through the visual
-              // gap into the panel, so there's no dead zone that kills the hover
-              className="absolute top-full z-30"
-              initial={{ opacity: 0 }}
-              animate={{
-                opacity: 1,
-                left: coords.left,
-                width: Math.max(coords.width, MIN_DROPDOWN_WIDTH),
-              }}
-              exit={{ opacity: 0 }}
-              transition={{ type: "spring", stiffness: 420, damping: 38, mass: 0.8 }}
+    <nav
+      ref={navRef}
+      aria-label="Main"
+      className="absolute left-1/2 z-30 hidden -translate-x-1/2 items-center gap-0.5 lg:flex"
+      onMouseLeave={() => setActive(null)}
+    >
+      {navItems.map((item) => (
+        <div
+          key={item.title}
+          ref={(el) => {
+            itemRefs.current[item.title] = el
+          }}
+          className="relative"
+          onMouseEnter={() => handleEnter(item)}
+        >
+          {item.dropdown ? (
+            <button
+              type="button"
+              className={cn(
+                buttonVariants({ variant: "ghost", size: "default" }),
+                "relative z-10 gap-1 text-sm font-medium text-foreground/80 hover:text-foreground",
+                active?.title === item.title && "text-foreground"
+              )}
             >
-              <motion.div
-                initial={{ scale: 0.96, y: 6 }}
-                animate={{ scale: 1, y: 0 }}
-                exit={{ scale: 0.96, y: 6 }}
-                transition={{ type: "spring", stiffness: 420, damping: 38, mass: 0.8 }}
-                className="origin-top rounded-lg border bg-popover p-px  mt-2"
-              >
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={active.title}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.1 }}
-                    className="flex flex-col"
-                  >
-                    {active.dropdown.map((entry) => (
-                      <Link
-                        key={entry}
-                        href={`/${entry.toLowerCase()}`}
-                        className="rounded-md px-3 py-2 text-sm text-foreground/80 transition-colors hover:bg-muted hover:text-foreground"
-                      >
-                        {entry}
-                      </Link>
-                    ))}
-                  </motion.div>
-                </AnimatePresence>
-              </motion.div>
-            </motion.div>
+              {item.title}
+              <RiArrowDownSLine
+                className={cn(
+                  "size-4 opacity-60 transition-transform duration-200",
+                  active?.title === item.title && "-rotate-180"
+                )}
+              />
+            </button>
+          ) : (
+            <Link
+              href={item.href ?? "#"}
+              className={cn(
+                buttonVariants({ variant: "ghost", size: "default" }),
+                "relative z-10 text-sm font-medium text-foreground/80 hover:text-foreground",
+                active?.title === item.title && "text-foreground"
+              )}
+            >
+              {item.title}
+            </Link>
           )}
-        </AnimatePresence>
-      </nav>
 
-      <div className="flex items-center gap-2">
-        <Button variant="outline" size="lg">
-          Login
+          {active?.title === item.title && (
+            <motion.div
+              layoutId="nav-hover-bg"
+              className="absolute inset-0 rounded-md bg-muted"
+              transition={{ type: "spring", stiffness: 500, damping: 40 }}
+            />
+          )}
+        </div>
+      ))}
+
+      <AnimatePresence>
+        {active?.dropdown && (
+          <motion.div
+            className="absolute top-full z-30"
+            initial={{ opacity: 0 }}
+            animate={{
+              opacity: 1,
+              left: coords.left,
+              width: Math.max(coords.width, MIN_DROPDOWN_WIDTH),
+            }}
+            exit={{ opacity: 0 }}
+            transition={{ type: "spring", stiffness: 420, damping: 38, mass: 0.8 }}
+          >
+            <motion.div
+              initial={{ scale: 0.96, y: 6 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.96, y: 6 }}
+              transition={{ type: "spring", stiffness: 420, damping: 38, mass: 0.8 }}
+              className="mt-2 origin-top rounded-lg border bg-popover p-px"
+            >
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={active.title}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.1 }}
+                  className="flex flex-col"
+                >
+                  {active.dropdown.map((entry) => (
+                    <Link
+                      key={entry}
+                      href={`/${entry.toLowerCase()}`}
+                      className="rounded-md px-3 py-2 text-sm text-foreground/80 transition-colors hover:bg-muted hover:text-foreground"
+                    >
+                      {entry}
+                    </Link>
+                  ))}
+                </motion.div>
+              </AnimatePresence>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </nav>
+  )
+}
+
+function MobileNav({
+  open,
+  onClose,
+}: {
+  open: boolean
+  onClose: () => void
+}) {
+  const [expanded, setExpanded] = useState<string | null>(null)
+
+  useEffect(() => {
+    if (!open) {
+      setExpanded(null)
+    }
+  }, [open])
+
+  return (
+    <AnimatePresence>
+      {open && (
+        <>
+          <motion.button
+            type="button"
+            aria-label="Close menu"
+            className="fixed inset-0 z-40 bg-background/70 backdrop-blur-sm lg:hidden"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={onClose}
+          />
+
+          <motion.div
+            id="mobile-nav"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Mobile navigation"
+            className="fixed inset-y-0 right-0 z-50 flex w-full max-w-sm flex-col border-l bg-background shadow-xl lg:hidden"
+            initial={{ x: "100%" }}
+            animate={{ x: 0 }}
+            exit={{ x: "100%" }}
+            transition={{ type: "spring", stiffness: 420, damping: 40 }}
+          >
+            <div className="flex items-center justify-between border-b px-4 py-4">
+              <Link href="/" aria-label="Zerops home" onClick={onClose}>
+                <LogoSvg />
+              </Link>
+              <Button
+                variant="ghost"
+                size="icon"
+                aria-label="Close menu"
+                onClick={onClose}
+              >
+                <RiCloseLine className="size-5" />
+              </Button>
+            </div>
+
+            <nav aria-label="Mobile" className="flex-1 overflow-y-auto px-4 py-4">
+              <ul className="flex flex-col gap-1">
+                {navItems.map((item) => (
+                  <li key={item.title}>
+                    {item.dropdown ? (
+                      <div className="rounded-lg border border-border/60">
+                        <button
+                          type="button"
+                          className="flex w-full items-center justify-between px-3 py-3 text-sm font-medium text-foreground"
+                          aria-expanded={expanded === item.title}
+                          onClick={() =>
+                            setExpanded((current) =>
+                              current === item.title ? null : item.title
+                            )
+                          }
+                        >
+                          {item.title}
+                          <RiArrowDownSLine
+                            className={cn(
+                              "size-4 opacity-60 transition-transform duration-200",
+                              expanded === item.title && "-rotate-180"
+                            )}
+                          />
+                        </button>
+
+                        <AnimatePresence initial={false}>
+                          {expanded === item.title && (
+                            <motion.ul
+                              initial={{ height: 0, opacity: 0 }}
+                              animate={{ height: "auto", opacity: 1 }}
+                              exit={{ height: 0, opacity: 0 }}
+                              transition={{ duration: 0.2 }}
+                              className="overflow-hidden border-t border-border/60"
+                            >
+                              {item.dropdown.map((entry) => (
+                                <li key={entry}>
+                                  <Link
+                                    href={`/${entry.toLowerCase()}`}
+                                    className="block px-4 py-2.5 text-sm text-foreground/80 transition-colors hover:bg-muted hover:text-foreground"
+                                    onClick={onClose}
+                                  >
+                                    {entry}
+                                  </Link>
+                                </li>
+                              ))}
+                            </motion.ul>
+                          )}
+                        </AnimatePresence>
+                      </div>
+                    ) : (
+                      <Link
+                        href={item.href ?? "#"}
+                        className="block rounded-lg px-3 py-3 text-sm font-medium text-foreground transition-colors hover:bg-muted"
+                        onClick={onClose}
+                      >
+                        {item.title}
+                      </Link>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </nav>
+
+            <div className="border-t px-4 py-4">
+              <AuthButtons className="flex-col" onAction={onClose} />
+            </div>
+          </motion.div>
+        </>
+      )}
+    </AnimatePresence>
+  )
+}
+
+function Navbar() {
+  const [active, setActive] = useState<NavItem | null>(null)
+  const [coords, setCoords] = useState({ left: 0, width: 0 })
+  const [mobileOpen, setMobileOpen] = useState(false)
+
+  useEffect(() => {
+    document.body.style.overflow = mobileOpen ? "hidden" : ""
+
+    return () => {
+      document.body.style.overflow = ""
+    }
+  }, [mobileOpen])
+
+  useEffect(() => {
+    const onResize = () => {
+      if (window.innerWidth >= 1024) {
+        setMobileOpen(false)
+      }
+    }
+
+    window.addEventListener("resize", onResize)
+    return () => window.removeEventListener("resize", onResize)
+  }, [])
+
+  return (
+    <>
+      <div className="relative flex h-14 w-full items-center justify-between px-4 sm:h-16">
+        <div className="flex items-center">
+          <Link href="/" aria-label="Zerops home">
+            <LogoSvg />
+          </Link>
+        </div>
+
+        <DesktopNav
+          active={active}
+          setActive={setActive}
+          coords={coords}
+          setCoords={setCoords}
+        />
+
+        <AuthButtons className="hidden lg:flex" />
+
+        <Button
+          variant="ghost"
+          size="icon"
+          className="lg:hidden"
+          aria-label="Open menu"
+          aria-expanded={mobileOpen}
+          aria-controls="mobile-nav"
+          onClick={() => setMobileOpen(true)}
+        >
+          <RiMenuLine className="size-5" />
         </Button>
-        <Button variant="outline" size="lg">
-          Ask Zerops AI
-        </Button>
+
+        <SvgDividerHorizontal className="bottom-0" />
       </div>
 
-      <SvgDividerHorizontal className="bottom-0" />
-    </div>
+      <MobileNav open={mobileOpen} onClose={() => setMobileOpen(false)} />
+    </>
   )
 }
 

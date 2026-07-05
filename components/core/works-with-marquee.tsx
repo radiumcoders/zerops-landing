@@ -59,7 +59,7 @@ const TECH_LOGOS: LogoItem[] = [
 ]
 
 const iconClassName =
-  "size-7 shrink-0 transition-opacity duration-200 hover:opacity-80"
+  "size-6 shrink-0 transition-opacity duration-200 hover:opacity-80 sm:size-7"
 
 function BrandIcon({ icon }: { icon: SimpleIcon }) {
   return (
@@ -81,7 +81,7 @@ function AnalogIcon() {
     <img
       src="/logos/analog.svg"
       alt="Analog"
-      className="h-7 w-auto shrink-0 transition-opacity duration-200 hover:opacity-80"
+      className="h-6 w-auto shrink-0 transition-opacity duration-200 hover:opacity-80 sm:h-7"
     />
   )
 }
@@ -132,7 +132,7 @@ function MarqueeTrack({
   return (
     <div
       aria-hidden={hidden}
-      className={cn("flex w-max items-center gap-10 px-5", className)}
+      className={cn("flex w-max items-center gap-6 px-3 sm:gap-10 sm:px-5", className)}
     >
       {logos.map((logo, index) => (
         <div
@@ -151,8 +151,8 @@ export default function WorksWithMarquee() {
     <div className="relative w-full bg-background">
       <SvgDividerHorizontal className="top-0" />
 
-      <div className="flex w-full items-center gap-6 py-5">
-        <p className="shrink-0 text-sm font-medium tracking-wide text-muted-foreground uppercase">
+      <div className="flex w-full flex-col items-stretch gap-3 px-2 py-4 sm:flex-row sm:items-center sm:gap-6 sm:px-0 sm:py-5">
+        <p className="shrink-0 text-center text-xs font-medium tracking-wide text-muted-foreground uppercase sm:text-left sm:text-sm">
           Works With
         </p>
 

@@ -1,0 +1,23 @@
+---
+pid: 6360
+cwd: "C:\mainer\zerops-landing"
+command: "cd C:\\mainer\\zerops-landing; pnpm add simple-icons"
+started_at: 2026-07-05T13:31:19.628Z
+running_for_ms: 7534998  
+---
+✓ Lockfile passes supply-chain policies (verified 1h ago)
+Progress: resolved 1, reused 0, downloaded 0, added 0
+Progress: resolved 22, reused 20, downloaded 0, added 0
+Progress: resolved 121, reused 96, downloaded 0, added 0
+Progress: resolved 351, reused 245, downloaded 0, added 0
+Progress: resolved 656, reused 583, downloaded 0, added 0
+Packages: +1
++
+Progress: resolved 656, reused 583, downloaded 1, added 0
+Progress: resolved 656, reused 583, downloaded 1, added 1
+Progress: resolved 656, reused 583, downloaded 1, added 1, done
+
+dependencies:
++ simple-icons 16.24.1 (16.25.0 is available)
+
+Done in 29.2s using pnpm v11.10.0

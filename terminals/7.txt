@@ -1,0 +1,28 @@
+---
+pid: 21200
+cwd: "C:\mainer\zerops-landing"
+command: "cmd /c \"cd /d C:\\mainer\\zerops-landing && npx tsc --noEmit && npx next build\""
+started_at: 2026-07-05T14:02:20.643Z
+running_for_ms: 5679994  
+---
+▲ Next.js 16.2.6 (Turbopack)
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 8.2s
+  Running TypeScript ...
+  Finished TypeScript in 4.4s ...
+  Collecting page data using 5 workers ...
+  Generating static pages using 5 workers (0/4) ...
+  Generating static pages using 5 workers (1/4) 
+  Generating static pages using 5 workers (2/4) 
+  Generating static pages using 5 workers (3/4) 
+✓ Generating static pages using 5 workers (4/4) in 607ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+└ ○ /_not-found
+
+
+○  (Static)  prerendered as static content
+

@@ -1,0 +1,28 @@
+---
+pid: 21904
+cwd: "C:\mainer\zerops-landing"
+command: "cmd /c \"cd /d C:\\mainer\\zerops-landing && npx next build\""
+started_at: 2026-07-05T13:57:59.955Z
+running_for_ms: 5939999  
+---
+▲ Next.js 16.2.6 (Turbopack)
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 8.1s
+  Running TypeScript ...
+  Finished TypeScript in 3.6s ...
+  Collecting page data using 5 workers ...
+  Generating static pages using 5 workers (0/4) ...
+  Generating static pages using 5 workers (1/4) 
+  Generating static pages using 5 workers (2/4) 
+  Generating static pages using 5 workers (3/4) 
+✓ Generating static pages using 5 workers (4/4) in 498ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+└ ○ /_not-found
+
+
+○  (Static)  prerendered as static content
+

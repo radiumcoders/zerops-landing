@@ -20,7 +20,7 @@ export default function Page() {
               <h1 className="w-full text-center text-6xl tracking-tighter">
                 Cloud That Respects Developers
               </h1>
-              <h1 className="w-fit bg-emerald-200 px-2 text-center text-6xl tracking-tighter text-emerald-900 dark:bg-emerald-900 dark:text-emerald-100">
+              <h1 className="w-fit px-2 text-center text-6xl tracking-tighter text-teal-600 dark:text-teal-500 bg-teal-50 dark:bg-teal-950">
                 Human And AI
               </h1>
             </div>

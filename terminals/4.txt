@@ -1,0 +1,25 @@
+---
+pid: 19972
+cwd: "C:\mainer\zerops-landing"
+command: "cmd /c \"cd /d C:\\mainer\\zerops-landing && npx next build\""
+started_at: 2026-07-05T13:55:11.845Z
+running_for_ms: 6109994  
+---
+▲ Next.js 16.2.6 (Turbopack)
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 12.9s
+  Running TypeScript ...
+Failed to type check.
+
+./components/ui/globe.tsx:68:20
+Type error: Expected 1 arguments, but got 0.
+
+  66 | export function Globe({ globeConfig, data }: WorldProps) {
+  67 |   const globeRef = useRef<ThreeGlobe | null>(null);
+> 68 |   const groupRef = useRef();
+     |                    ^
+  69 |   const [isInitialized, setIsInitialized] = useState(false);
+  70 |
+  71 |   const defaultProps = {
+Next.js build worker exited with code: 1 and signal: null

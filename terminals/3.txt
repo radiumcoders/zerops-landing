@@ -1,0 +1,14 @@
+---
+pid: 22488
+cwd: "C:\mainer\zerops-landing"
+command: "cmd /c \"cd /d C:\\mainer\\zerops-landing && pnpm dlx shadcn@latest add @aceternity/globe --yes\""
+started_at: 2026-07-05T13:50:12.178Z
+running_for_ms: 6410000  
+---
+- Checking registry.
+✔ Checking registry.
+- Installing dependencies.
+- Installing dependencies.
+✔ Installing dependencies.
+- Updating files.
+? The file globe.tsx already exists. Would you like to overwrite? » (y/N)

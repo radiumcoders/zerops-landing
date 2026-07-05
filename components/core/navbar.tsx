@@ -14,7 +14,7 @@ function LogoSvg() {
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 42.27 50.48"
-      className="h-8 w-auto fill-foreground"
+      className="h-8 w-auto fill-primary"
       aria-hidden="true"
     >
       <path
@@ -200,8 +200,8 @@ function Navbar() {
         <Button variant="outline" size="lg">
           Login
         </Button>
-        <Button variant="default" size="lg">
-          Try With free 65$ Credits
+        <Button variant="outline" size="lg">
+          Ask Zerops AI
         </Button>
       </div>
 

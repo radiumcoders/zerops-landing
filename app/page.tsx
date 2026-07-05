@@ -14,26 +14,26 @@ export default function Page() {
       <SvgDividerVertical className="right-0" />
       <Navbar />
       <div className="flex h-full w-full flex-1 flex-col p-2">
-        <div className="general relative flex w-full flex-col items-center justify-center gap-4 p-10">
-          <div>
-            <h1 className="w-full text-center text-6xl font-semibold tracking-tighter">
-              Cloud That Respects Developers
-            </h1>
-            <h1 className="w-full text-center text-6xl font-semibold tracking-tighter">
-              Human Or AI
-            </h1>
+        <div className="general relative flex w-full flex-col items-center justify-center gap-6 p-10">
+          <div className="flex flex-col items-center justify-center gap-4">
+            <div className="flex flex-col items-center justify-center gap-2">
+              <h1 className="w-full text-center text-6xl tracking-tighter">
+                Cloud That Respects Developers
+              </h1>
+              <h1 className="w-fit bg-emerald-200 px-2 text-center text-6xl tracking-tighter text-emerald-900 dark:bg-emerald-900 dark:text-emerald-100">
+                Human And AI
+              </h1>
+            </div>
+            <p className="mx-auto w-full max-w-2xl text-center">
+              Full Linux containers, managed services, and a private network —
+              from agent environments to HA prod, only the scale changes.
+            </p>
           </div>
-          <p className="mx-auto w-full max-w-2xl text-center">
-            Full Linux containers, managed services, and a private network —
-            from agent environments to HA prod, only the scale changes.
-          </p>
 
           <div className="flex h-fit w-full items-center justify-center gap-2">
-            <Input
-              placeholder="Is Zerops For You?"
-              className="max-w-2xl border border-border bg-background text-2xl"
-            />
-            <Button>Ask Zerops AI</Button>
+            <Button size={"lg"} className={"font-sans font-semibold"}>
+              Try Now With Free Credits
+            </Button>
           </div>
           <SvgDividerHorizontal className="bottom-0" />
         </div>

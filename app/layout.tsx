@@ -1,8 +1,13 @@
+import type { Metadata } from "next"
 import { Geist, Geist_Mono, Inter, Schibsted_Grotesk } from "next/font/google"
 
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils"
+
+export const metadata: Metadata = {
+  themeColor: "#064e3b",
+}
 
 const geist = Geist({subsets:['latin'],variable:'--font-sans'})
 

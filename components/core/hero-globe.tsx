@@ -1,6 +1,8 @@
 "use client"
 
 import dynamic from "next/dynamic"
+import { useMemo } from "react"
+import { useTheme } from "next-themes"
 
 import type { GlobeConfig } from "@/components/ui/globe"
 
@@ -9,29 +11,17 @@ const World = dynamic(
   { ssr: false }
 )
 
-const globeConfig: GlobeConfig = {
-  pointSize: 4,
-  globeColor: "#000000",
-  globeOpacity: 0,
-  showAtmosphere: false,
-  emissive: "#000000",
-  emissiveIntensity: 0,
-  shininess: 0,
-  polygonColor: "rgba(255,255,255,0.55)",
-  ambientLight: "#ffffff",
-  directionalLeftLight: "#ffffff",
-  directionalTopLight: "#ffffff",
-  pointLight: "#ffffff",
-  arcTime: 1200,
-  arcLength: 0.9,
-  rings: 1,
-  maxRings: 3,
-  autoRotate: true,
-  autoRotateSpeed: 0.6,
-  enableDrag: true,
-}
+const GLOBE_COLORS = {
+  light: "#065f46",
+  dark: "#d1fae5",
+} as const
 
-const globeArcs = [
+const GLOBE_POLYGON_COLORS = {
+  light: "rgba(6, 95, 70, 0.65)",
+  dark: "rgba(209, 250, 229, 0.65)",
+} as const
+
+const globeArcsTemplate = [
   {
     order: 1,
     startLat: 40.7128,
@@ -39,7 +29,6 @@ const globeArcs = [
     endLat: 51.5074,
     endLng: -0.1278,
     arcAlt: 0.2,
-    color: "#ffffff",
   },
   {
     order: 1,
@@ -48,7 +37,6 @@ const globeArcs = [
     endLat: 1.3521,
     endLng: 103.8198,
     arcAlt: 0.2,
-    color: "#ffffff",
   },
   {
     order: 2,
@@ -57,7 +45,6 @@ const globeArcs = [
     endLat: 22.3193,
     endLng: 114.1694,
     arcAlt: 0.25,
-    color: "#ffffff",
   },
   {
     order: 2,
@@ -66,7 +53,6 @@ const globeArcs = [
     endLat: -33.8688,
     endLng: 151.2093,
     arcAlt: 0.3,
-    color: "#ffffff",
   },
   {
     order: 3,
@@ -75,7 +61,6 @@ const globeArcs = [
     endLat: 19.076,
     endLng: 72.8777,
     arcAlt: 0.25,
-    color: "#ffffff",
   },
   {
     order: 3,
@@ -84,11 +69,52 @@ const globeArcs = [
     endLat: 34.0522,
     endLng: -118.2437,
     arcAlt: 0.35,
-    color: "#ffffff",
   },
 ]
 
 export default function HeroGlobe() {
+  const { resolvedTheme } = useTheme()
+  const isDark = resolvedTheme === "dark"
+
+  const globeColor = isDark ? GLOBE_COLORS.dark : GLOBE_COLORS.light
+  const polygonColor = isDark
+    ? GLOBE_POLYGON_COLORS.dark
+    : GLOBE_POLYGON_COLORS.light
+
+  const globeConfig = useMemo<GlobeConfig>(
+    () => ({
+      pointSize: 4,
+      globeColor: "#000000",
+      globeOpacity: 0,
+      showAtmosphere: false,
+      emissive: "#000000",
+      emissiveIntensity: 0,
+      shininess: 0,
+      polygonColor,
+      ambientLight: "#ffffff",
+      directionalLeftLight: "#ffffff",
+      directionalTopLight: "#ffffff",
+      pointLight: "#ffffff",
+      arcTime: 1200,
+      arcLength: 0.9,
+      rings: 1,
+      maxRings: 3,
+      autoRotate: true,
+      autoRotateSpeed: 0.6,
+      enableDrag: true,
+    }),
+    [polygonColor]
+  )
+
+  const globeArcs = useMemo(
+    () =>
+      globeArcsTemplate.map((arc) => ({
+        ...arc,
+        color: globeColor,
+      })),
+    [globeColor]
+  )
+
   return (
     <div className="absolute inset-x-0 bottom-0 h-[min(1100px,150vw)] translate-y-[42%]">
       <World globeConfig={globeConfig} data={globeArcs} />

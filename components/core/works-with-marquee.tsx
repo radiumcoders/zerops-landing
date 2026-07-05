@@ -2,7 +2,6 @@
 
 import type { SimpleIcon } from "simple-icons"
 import {
-  siAngular,
   siAstro,
   siBun,
   siDeno,
@@ -31,7 +30,7 @@ import { cn } from "@/lib/utils"
 
 type LogoItem =
   | { type: "icon"; icon: SimpleIcon }
-  | { type: "custom"; name: string }
+  | { type: "custom"; name: "analog" | "angular" }
 
 const TECH_LOGOS: LogoItem[] = [
   { type: "icon", icon: siBun },
@@ -52,7 +51,7 @@ const TECH_LOGOS: LogoItem[] = [
   { type: "custom", name: "analog" },
   { type: "icon", icon: siNuxt },
   { type: "icon", icon: siDotnet },
-  { type: "icon", icon: siAngular },
+  { type: "custom", name: "angular" },
   { type: "icon", icon: siNextdotjs },
   { type: "icon", icon: siNestjs },
   { type: "icon", icon: siPhp },
@@ -60,7 +59,7 @@ const TECH_LOGOS: LogoItem[] = [
 ]
 
 const iconClassName =
-  "size-7 shrink-0 fill-foreground/55 transition-colors duration-200 hover:fill-foreground"
+  "size-7 shrink-0 transition-opacity duration-200 hover:opacity-80"
 
 function BrandIcon({ icon }: { icon: SimpleIcon }) {
   return (
@@ -68,8 +67,9 @@ function BrandIcon({ icon }: { icon: SimpleIcon }) {
       role="img"
       viewBox="0 0 24 24"
       aria-label={icon.title}
-      className={iconClassName}
+      className={cn(iconClassName, icon.hex === "000000" && "dark:invert")}
       xmlns="http://www.w3.org/2000/svg"
+      style={{ fill: `#${icon.hex}` }}
     >
       <path d={icon.path} />
     </svg>
@@ -78,21 +78,42 @@ function BrandIcon({ icon }: { icon: SimpleIcon }) {
 
 function AnalogIcon() {
   return (
+    <img
+      src="/logos/analog.svg"
+      alt="Analog"
+      className="h-7 w-auto shrink-0 transition-opacity duration-200 hover:opacity-80"
+    />
+  )
+}
+
+function AngularIcon() {
+  return (
     <svg
       role="img"
       viewBox="0 0 24 24"
-      aria-label="Analog"
+      aria-label="Angular"
       className={iconClassName}
       xmlns="http://www.w3.org/2000/svg"
     >
-      <path d="M12 2.5 21.5 20.5H14.8L12 15.2 9.2 20.5H2.5L12 2.5Z" />
-      <path d="M12 7.2 17.4 17.8H14.6L12 13.1 9.4 17.8H6.6L12 7.2Z" />
+      <path
+        fill="#DD0031"
+        d="M16.712 17.711H7.288l-1.204 2.916L12 24l5.916-3.373-1.204-2.916Z"
+      />
+      <path
+        fill="#C3002F"
+        d="M14.692 0l7.832 16.855.814-12.856L14.692 0Z"
+      />
+      <path fill="#DD0031" d="M9.308 0 .662 3.999l.814 12.856L9.308 0Z" />
     </svg>
   )
 }
 
 function LogoItemView({ logo }: { logo: LogoItem }) {
   if (logo.type === "custom") {
+    if (logo.name === "angular") {
+      return <AngularIcon />
+    }
+
     return <AnalogIcon />
   }
 

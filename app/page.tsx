@@ -24,7 +24,7 @@ export default function Page() {
                 Human And AI
               </h1>
             </div>
-            <p className="mx-auto w-full max-w-2xl text-center">
+            <p className="mx-auto w-full max-w-2xl text-center tracking-tighter font-sans">
               Full Linux containers, managed services, and a private network —
               from agent environments to HA prod, only the scale changes.
             </p>

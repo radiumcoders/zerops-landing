@@ -11,14 +11,17 @@ const World = dynamic(
   { ssr: false }
 )
 
+const BRAND_COLOR = "#00A49A"
+const BRAND_COLOR_SUBTLE = "#7DD4CD"
+
 const GLOBE_COLORS = {
-  light: "#115e59",
-  dark: "#ccfbf1",
+  light: BRAND_COLOR,
+  dark: BRAND_COLOR_SUBTLE,
 } as const
 
 const GLOBE_POLYGON_COLORS = {
-  light: "rgba(17, 94, 89, 0.65)",
-  dark: "rgba(204, 251, 241, 0.65)",
+  light: "rgba(0, 164, 154, 0.65)",
+  dark: "rgba(125, 212, 205, 0.65)",
 } as const
 
 const globeArcsTemplate = [

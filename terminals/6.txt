@@ -3,7 +3,7 @@ pid: 5128
 cwd: "C:\mainer\zerops-landing"
 command: "cmd /c \"cd /d C:\\mainer\\zerops-landing && pnpm remove @react-three/drei && pnpm add @react-three/fiber@^9.1.2 three@0.181.2\""
 started_at: 2026-07-05T14:00:12.951Z
-running_for_ms: 5795001  
+running_for_ms: 7815008  
 ---
 ✓ Lockfile passes supply-chain policies (verified 5m ago)
 Progress: resolved 1, reused 0, downloaded 0, added 0

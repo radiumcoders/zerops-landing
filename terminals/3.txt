@@ -3,7 +3,7 @@ pid: 22488
 cwd: "C:\mainer\zerops-landing"
 command: "cmd /c \"cd /d C:\\mainer\\zerops-landing && pnpm dlx shadcn@latest add @aceternity/globe --yes\""
 started_at: 2026-07-05T13:50:12.178Z
-running_for_ms: 7625004  
+running_for_ms: 8425000  
 ---
 - Checking registry.
 ✔ Checking registry.

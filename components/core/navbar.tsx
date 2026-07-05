@@ -10,6 +10,7 @@ import {
 } from "@remixicon/react"
 
 import { Button, buttonVariants } from "../ui/button"
+import { ThemeToggle } from "@/components/theme-toggle"
 import { cn } from "@/lib/utils"
 import SvgDividerHorizontal from "../utils/svg-line"
 
@@ -383,19 +384,21 @@ function Navbar() {
           setCoords={setCoords}
         />
 
-        <AuthButtons className="hidden lg:flex" />
-
-        <Button
-          variant="ghost"
-          size="icon"
-          className="lg:hidden"
-          aria-label="Open menu"
-          aria-expanded={mobileOpen}
-          aria-controls="mobile-nav"
-          onClick={() => setMobileOpen(true)}
-        >
-          <RiMenuLine className="size-5" />
-        </Button>
+        <div className="flex items-center gap-1">
+          <ThemeToggle className="lg:hidden" />
+          <AuthButtons className="hidden lg:flex" />
+          <Button
+            variant="ghost"
+            size="icon"
+            className="lg:hidden"
+            aria-label="Open menu"
+            aria-expanded={mobileOpen}
+            aria-controls="mobile-nav"
+            onClick={() => setMobileOpen(true)}
+          >
+            <RiMenuLine className="size-5" />
+          </Button>
+        </div>
 
         <SvgDividerHorizontal className="bottom-0" />
       </div>

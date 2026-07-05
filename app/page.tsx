@@ -13,7 +13,7 @@ export default function Page() {
       <SvgDividerVertical className="right-0 hidden md:block" />
       <Navbar />
       <div className="flex h-full w-full flex-1 flex-col p-2 sm:p-3">
-        <div className="general relative flex w-full flex-col items-center justify-center gap-5 px-4 py-8 sm:gap-6 sm:px-6 sm:py-10 lg:p-10">
+        <div className=" relative flex w-full flex-col items-center justify-center gap-5 px-4 py-8 sm:gap-6 sm:px-6 sm:py-10 lg:p-10">
           <div className="flex flex-col items-center justify-center gap-3 sm:gap-4">
             <div className="flex flex-col items-center justify-center gap-2">
               <h1 className="w-full text-center text-3xl tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl">

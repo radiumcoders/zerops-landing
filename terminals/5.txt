@@ -3,7 +3,7 @@ pid: 21904
 cwd: "C:\mainer\zerops-landing"
 command: "cmd /c \"cd /d C:\\mainer\\zerops-landing && npx next build\""
 started_at: 2026-07-05T13:57:59.955Z
-running_for_ms: 7295000  
+running_for_ms: 7960000  
 ---
 ▲ Next.js 16.2.6 (Turbopack)
 

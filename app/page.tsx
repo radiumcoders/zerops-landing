@@ -43,7 +43,7 @@ export default function Page() {
         <section className="relative mt-auto flex min-h-[36svh] flex-1 flex-col justify-end overflow-hidden sm:min-h-[44svh] lg:min-h-[50svh]">
           <HeroGlobe />
 
-          <div className="relative z-10 w-full p-2">
+          <div className="relative z-10 -mx-2 w-auto px-0 py-2 sm:mx-0 sm:w-full sm:p-2">
             <WorksWithMarquee />
           </div>
         </section>

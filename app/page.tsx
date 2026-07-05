@@ -31,7 +31,7 @@ export default function Page() {
           </div>
 
           <div className="flex h-fit w-full items-center justify-center gap-2">
-            <Button size={"lg"} className={"font-sans font-semibold"}>
+            <Button size={"lg"} className={"font-sans text-background font-semibold"}>
               Try Now With Free Credits
             </Button>
           </div>
